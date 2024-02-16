@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Cipher</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+  }
+
+  .container {
+    width: 80%;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .input-container {
+    margin-bottom: 20px;
+  }
+
+  .input-container label {
+    font-weight: bold;
+    display: block;
+  }
+
+  .input-container input[type="text"], .input-container input[type="number"] {
+    padding: 8px;
+    margin: 5px 0;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  .btn-container {
+    text-align: center;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  #output {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="input-container">
+    <label for="encodeMessage">Enter The Message to Encode:</label>
+    <input type="text" id="encodeMessage" name="encodeMessage" required>
+  </div>
+  <div class="btn-container">
+    <button onclick="encode()">Encode</button>
+    <button onclick="copyText('encodedText')">Copy Encoded</button>
+  </div>
+  <div class="input-container">
+    <label for="decodeMessage">Enter The Message to Decode:</label>
+    <input type="text" id="decodeMessage" name="decodeMessage" required>
+  </div>
+  <div class="btn-container">
+    <button onclick="decode()">Decode</button>
+    <button onclick="copyText('decodedText')">Copy Decoded</button>
+  </div>
+  <div id="output">
+    <div id="encodedText"></div>
+    <div id="decodedText"></div>
+  </div>
+</div>
+
+<script>
+  function encode() {
+    var message = document.getElementById('encodeMessage').value;
+    var encoded = '';
+    for (var i = 0; i < message.length; i++) {
+      var charCode = message.charCodeAt(i) * 3;
+      encoded += charCode + ' '; // Adding space for better readability
+    }
+    document.getElementById('encodedText').innerText = encoded.trim();
+  }
+
+  function decode() {
+    var message = document.getElementById('decodeMessage').value;
+    var decoded = '';
+    var numbers = message.split(' ');
+    for (var i = 0; i < numbers.length; i++) {
+      var charCode = parseInt(numbers[i]) / 3;
+      decoded += String.fromCharCode(charCode);
+    }
+    document.getElementById('decodedText').innerText = decoded;
+  }
+
+  function copyText(elementId) {
+    var text = document.getElementById(elementId).innerText;
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        alert('Text copied to clipboard!');
+      })
+      .catch(err => {
+        console.error('Failed to copy text: ', err);
+      });
+  }
+</script>
+
+</body>
+</html>
